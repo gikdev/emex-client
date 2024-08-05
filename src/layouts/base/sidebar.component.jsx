@@ -20,9 +20,9 @@ const items = [
   { id: 3, text: "مشاهده سفارشات", icon: Receipt, url: "#" },
   { id: 4, text: "ثبت سند", icon: PenNib, url: "#" },
   { id: 5, text: "ثبت حواله", icon: PenNib, url: "#" },
-  { id: 6, text: "شرایط و قوانین", icon: Scales, url: "#" },
+  { id: 6, text: "شرایط و قوانین", icon: Scales, url: "/rules" },
   { id: 7, text: "مانده حساب", icon: Coins, url: "#" },
-  { id: 8, text: "درباره ما", icon: Info, url: "#" },
+  { id: 8, text: "درباره ما", icon: Info, url: "/about" },
 ]
 
 const StyledAside = tw.aside`
