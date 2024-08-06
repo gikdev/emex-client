@@ -1,4 +1,7 @@
-import "./styles.css"
+import "@/styles/main.css"
+import "ag-grid-community/styles/ag-grid.css"
+import "ag-grid-community/styles/ag-theme-quartz.css"
+import "@/styles/overrides.css"
 import { Routes } from "@/routes/index"
 import React from "react"
 import ReactDOM from "react-dom/client"

@@ -1,5 +1,6 @@
 import { Btn } from "@/components"
 import {
+  Code,
   Coins,
   House,
   Info,
@@ -13,6 +14,8 @@ import {
 import tw from "tailwind-styled-components"
 import { Link, useLocation } from "wouter"
 
+const isDev = import.meta.env.DEV
+
 const items = [
   { id: 0, text: "خانه", icon: House, url: "/" },
   { id: 1, text: "پروفایل", icon: UserCircle, url: "/profile" },
@@ -24,6 +27,8 @@ const items = [
   { id: 7, text: "مانده حساب", icon: Coins, url: "#" },
   { id: 8, text: "درباره ما", icon: Info, url: "/about" },
 ]
+
+if (isDev) items.push({ id: 9, text: "تست", icon: Code, url: "/test" })
 
 const StyledAside = tw.aside`
   border-l border-slatedark-6 

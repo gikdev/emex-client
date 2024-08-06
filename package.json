@@ -15,6 +15,7 @@
     "@phosphor-icons/react": "^2.1.7",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-switch": "^1.1.0",
+    "ag-grid-react": "^32.0.2",
     "clsx": "^2.1.1",
     "emex-shared": "link:emex-shared",
     "react": "^18.3.1",
@@ -27,6 +28,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",
+    "@gikdev/tx": "^0.2.1-beta",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.7.0",
