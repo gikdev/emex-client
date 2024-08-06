@@ -5,8 +5,9 @@ function ProductForm({ onRefusion, modeText }) {
   const [weight, setWeight] = useState("")
   const [tradeValue, setTradeValue] = useState("")
   const [isBuyingInWeightMode, setIsBuyingWeightMode] = useState(true)
-  // BUG 🐞👇🏻
-  // const handleSubmit = e => e.preventDefault()
+
+  // BUG 🐞👇🏻 fixed... 😁
+  const handleSubmit = e => e.preventDefault()
 
   return (
     <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
