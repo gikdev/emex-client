@@ -1,7 +1,6 @@
-import { ErrorCard } from "@/components"
+import { ErrorCard, Nav } from "@/components"
 import { useSmartLoginManager } from "@/hooks"
 import { ErrorBoundary } from "react-error-boundary"
-import { Nav } from "./nav.component"
 import { Sidebar } from "./sidebar.component"
 
 function Base({ children }) {

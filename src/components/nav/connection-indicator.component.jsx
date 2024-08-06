@@ -1,0 +1,25 @@
+import { LoadingSpinner } from "@/components"
+import { useSignalRContext } from "@/contexts"
+import { cn } from "@/helpers"
+import { Globe, GlobeX, Question } from "@phosphor-icons/react"
+
+function ConnectionIndicator() {
+  const { connectionState } = useSignalRContext()
+  let Icon = Question
+  const containerClassName = cn("p-1 rounded-full bg-slatedark-4 text-slatedark-11", {
+    "bg-jadedark-4 text-jadedark-11": connectionState === "connected",
+    "bg-reddark-4 text-reddark-11": connectionState === "disconnected",
+  })
+
+  if (connectionState === "connected") Icon = Globe
+  if (connectionState === "disconnected") Icon = GlobeX
+
+  return (
+    <div className={containerClassName}>
+      {connectionState === "loading" && <LoadingSpinner />}
+      <Icon size={24} />
+    </div>
+  )
+}
+
+export { ConnectionIndicator }
