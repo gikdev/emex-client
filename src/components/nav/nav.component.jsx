@@ -14,7 +14,7 @@ function Nav() {
       <Link href="/">
         <img src={logoFull} alt="" />
       </Link>
-      <StyledAdminChip href="/not-found">
+      <StyledAdminChip href="/profile">
         <ConnectionIndicator />
         <Badge theme="success">آنلاین</Badge>
         <p>فروشگاه علی بقال</p>
