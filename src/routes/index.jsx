@@ -13,13 +13,15 @@ function Routes() {
     <Switch>
       <Route path="/login" component={Login} />
       <Base>
-        <Route path="/" component={Home} />
-        <Route path="/trade" component={Trade} />
-        <Route path="/profile" component={Profile} />
-        <Route path="/about" component={About} />
-        <Route path="/rules" component={Rules} />
-        <Route path="/test" component={Test} />
-        <Route> ۴۰۴ پیدا نشد </Route>
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/trade" component={Trade} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/about" component={About} />
+          <Route path="/rules" component={Rules} />
+          <Route path="/test" component={Test} />
+          <Route path="*"> ۴۰۴ پیدا نشد </Route>
+        </Switch>
       </Base>
     </Switch>
   )
