@@ -5,11 +5,14 @@ import "@/styles/overrides.css"
 import { Routes } from "@/routes/index"
 import React from "react"
 import ReactDOM from "react-dom/client"
+import { Providers } from "./providers"
 
 const container = document.querySelector("#root")
 const root = ReactDOM.createRoot(container)
 root.render(
   <React.StrictMode>
-    <Routes />
+    <Providers>
+      <Routes />
+    </Providers>
   </React.StrictMode>,
 )

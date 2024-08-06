@@ -1,10 +1,12 @@
-import data from "@/assets/data.json"
-import { ErrorCard, VersionTag } from "@/components"
+import { ErrorCard } from "@/components"
+import { useSmartLoginManager } from "@/hooks"
 import { ErrorBoundary } from "react-error-boundary"
 import { Nav } from "./nav.component"
 import { Sidebar } from "./sidebar.component"
 
 function Base({ children }) {
+  useSmartLoginManager()
+
   return (
     <>
       <header>
@@ -16,7 +18,6 @@ function Base({ children }) {
           <ErrorBoundary FallbackComponent={ErrorCard}>{children}</ErrorBoundary>
         </section>
       </main>
-      <VersionTag version={data.version} />
     </>
   )
 }
