@@ -1,4 +1,6 @@
 import { Heading, Hr } from "@/components"
+import { PersianDate, getTimeFa } from "@/utils"
+import Cookies from "js-cookie"
 import { useState } from "react"
 import tw from "tailwind-styled-components"
 import { Pricy } from "./pricy.component"
@@ -6,37 +8,62 @@ import { ProductForm } from "./product-form.component"
 
 const StyledContainer = tw.div`
   bg-slatedark-2 border-2 border-slatedark-6 
-  p-4 flex flex-col gap-4
-  rounded-lg max-w-max
+  p-4 flex flex-col gap-4 min-w-full
+  rounded-lg max-w-max sm:min-w-96
 `
 
-function ProductCard() {
+function ProductCard({ name, dateUpdate, price, diffBuyPrice, diffSellPrice }) {
+  // const {
+  //   id,
+  //   name,
+  //   price,
+  //   diffBuyPrice,
+  //   diffSellPrice,
+  //   dateUpdate,
+  //   decimalNumber,
+  //   status,
+  //   mode,
+  //   unitPriceRatio,
+  //   maxAutoMin,
+  // } = productData
   const [selectedMode, setSelectedMode] = useState("")
   const modeText = selectedMode === "buy" ? "خرید" : selectedMode === "sell" ? "فروش" : "ناشناخته"
+
+  const lastUpdated = new PersianDate(dateUpdate)
+  const updateDate = lastUpdated.toLocaleDateString()
+  const updateTime = getTimeFa(lastUpdated)
+  const groupDiffBuyPrice = Cookies.get("diffBuyPrice") ?? 0
+  const groupDiffSellPrice = Cookies.get("diffSellPrice") ?? 0
+  const totalBuyPrice = price + +groupDiffBuyPrice + +diffBuyPrice
+  const totalSellPrice = price - groupDiffSellPrice - diffSellPrice
 
   return (
     <StyledContainer>
       <div className="flex flex-col gap-2">
         <Heading as="h2" size={2} className="text-center">
-          پسته اهواز
+          {name}
         </Heading>
-        <p className="text-xs text-center">۱۴۰۳/۰۵/۰۸ - ۱۶:۳۲:۴۵</p>
+        <p className="text-xs text-center">
+          {updateDate} - {updateTime}
+        </p>
       </div>
       <Hr />
       <div className="flex gap-4">
         <Pricy
           mode="buy"
+          price={totalBuyPrice}
+          isActive={selectedMode === "buy"}
           onBtnClick={() => {
             setSelectedMode("buy")
           }}
-          isActive={selectedMode === "buy"}
         />
         <Pricy
           mode="sell"
+          price={totalSellPrice}
+          isActive={selectedMode === "sell"}
           onBtnClick={() => {
             setSelectedMode("sell")
           }}
-          isActive={selectedMode === "sell"}
         />
       </div>
       {!!selectedMode.length && (
