@@ -13,7 +13,16 @@ const StyledContainer = tw.div`
   rounded-lg max-w-max sm:min-w-96
 `
 
-function ProductCard({ name, dateUpdate, price, diffBuyPrice, diffSellPrice, status }) {
+function ProductCard({
+  name,
+  dateUpdate,
+  price,
+  diffBuyPrice,
+  diffSellPrice,
+  status,
+  unitPriceRatio,
+  decimalNumber,
+}) {
   // productData: { id, name, price, diffBuyPrice, diffSellPrice, dateUpdate, decimalNumber, status, mode, unitPriceRatio, maxAutoMin }
   const [selectedMode, setSelectedMode] = useState("")
 
@@ -29,6 +38,16 @@ function ProductCard({ name, dateUpdate, price, diffBuyPrice, diffSellPrice, sta
     status !== ENUMS.PRODUCT_STATUS.DISABLED && status !== ENUMS.PRODUCT_STATUS.SELL_ONLY
   const isSellBtnEnabled =
     status !== ENUMS.PRODUCT_STATUS.DISABLED && status !== ENUMS.PRODUCT_STATUS.BUY_ONLY
+
+  function handleBuyBtnClick() {
+    const nextMode = selectedMode === "buy" ? "" : "buy"
+    setSelectedMode(nextMode)
+  }
+
+  function handleSellBtnClick() {
+    const nextMode = selectedMode === "sell" ? "" : "sell"
+    setSelectedMode(nextMode)
+  }
 
   return (
     <StyledContainer>
@@ -47,24 +66,26 @@ function ProductCard({ name, dateUpdate, price, diffBuyPrice, diffSellPrice, sta
           btnEnabled={isBuyBtnEnabled}
           price={totalBuyPrice}
           isActive={selectedMode === "buy"}
-          onBtnClick={() => {
-            setSelectedMode("buy")
-          }}
+          onBtnClick={handleBuyBtnClick}
         />
         <Pricy
           mode="sell"
           btnEnabled={isSellBtnEnabled}
           price={totalSellPrice}
           isActive={selectedMode === "sell"}
-          onBtnClick={() => {
-            setSelectedMode("sell")
-          }}
+          onBtnClick={handleSellBtnClick}
         />
       </div>
       {!!selectedMode.length && (
         <>
           <Hr />
-          <ProductForm modeText={modeText} onRefusion={() => setSelectedMode("")} />
+          <ProductForm
+            decimalNumber={decimalNumber}
+            basePrice={price}
+            unitPriceRatio={unitPriceRatio}
+            modeText={modeText}
+            onRefusion={() => setSelectedMode("")}
+          />
         </>
       )}
     </StyledContainer>
