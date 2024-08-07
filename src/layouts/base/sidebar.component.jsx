@@ -18,13 +18,13 @@ const isDev = import.meta.env.DEV
 
 const items = [
   { id: 0, text: "خانه", icon: House, url: "/" },
-  { id: 1, text: "پروفایل", icon: UserCircle, url: "/profile" },
+  // { id: 1, text: "پروفایل", icon: UserCircle, url: "/profile" },
   { id: 2, text: "معاملات", icon: Storefront, url: "/trade" },
-  { id: 3, text: "مشاهده سفارشات", icon: Receipt, url: "#" },
-  { id: 4, text: "ثبت سند", icon: PenNib, url: "#" },
-  { id: 5, text: "ثبت حواله", icon: PenNib, url: "#" },
+  // { id: 3, text: "مشاهده سفارشات", icon: Receipt, url: "#" },
+  // { id: 4, text: "ثبت سند", icon: PenNib, url: "#" },
+  // { id: 5, text: "ثبت حواله", icon: PenNib, url: "#" },
   { id: 6, text: "شرایط و قوانین", icon: Scales, url: "/rules" },
-  { id: 7, text: "مانده حساب", icon: Coins, url: "#" },
+  // { id: 7, text: "مانده حساب", icon: Coins, url: "#" },
   { id: 8, text: "درباره ما", icon: Info, url: "/about" },
 ]
 
