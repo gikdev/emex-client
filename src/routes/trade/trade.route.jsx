@@ -1,6 +1,7 @@
-import { ErrorCard, Heading, Hr, LoadingSpinner } from "@/components"
+import { Btn, ErrorCard, Heading, Hr, LoadingSpinner } from "@/components"
 import { useSignalRContext } from "@/contexts"
 import { apiEndpoints, apiHelper, fetcher } from "@/helpers"
+import { ArrowClockwise } from "@phosphor-icons/react"
 import { useEffect, useState } from "react"
 import { ErrorBoundary } from "react-error-boundary"
 import useSWR from "swr"
@@ -22,8 +23,24 @@ function Trade() {
   useEffect(() => {
     if (!productsResponse.data) return
     setProducts(productsResponse.data)
-    console.log(productsResponse.data)
   }, [productsResponse])
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    if (!products || !productsResponse.data) return
+    connectionRef.current.on("ReceivePriceUpdate", handlePriceChange)
+
+    const cleanup = () => connectionRef.current.off("ReceivePriceUpdate", handlePriceChange)
+    return cleanup
+  }, [products, productsResponse.data])
+
+  function handlePriceChange(stockID, newPrice, priceType, date) {
+    const clonedProducts = JSON.parse(JSON.stringify(products))
+    const targetStockIndex = clonedProducts.findIndex(product => product.id === stockID)
+    clonedProducts[targetStockIndex][priceType] = Number(newPrice)
+    clonedProducts[targetStockIndex].dateUpdate = date
+    setProducts(clonedProducts)
+  }
 
   return (
     <>
@@ -31,6 +48,9 @@ function Trade() {
         معاملات
       </Heading>
       <Hr />
+      <Btn className="mt-5 mx-auto" icon={ArrowClockwise} onClick={() => productsResponse.mutate()}>
+        تازه سازی
+      </Btn>
       <GridContainer>
         <ErrorBoundary FallbackComponent={ErrorCard}>
           {productsResponse.isLoading && <LoadingSpinner />}
