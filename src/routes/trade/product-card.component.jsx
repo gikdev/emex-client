@@ -1,4 +1,5 @@
 import { Heading, Hr } from "@/components"
+import { ENUMS } from "@/enums"
 import { PersianDate, getTimeFa } from "@/utils"
 import Cookies from "js-cookie"
 import { useState } from "react"
@@ -12,23 +13,11 @@ const StyledContainer = tw.div`
   rounded-lg max-w-max sm:min-w-96
 `
 
-function ProductCard({ name, dateUpdate, price, diffBuyPrice, diffSellPrice }) {
-  // const {
-  //   id,
-  //   name,
-  //   price,
-  //   diffBuyPrice,
-  //   diffSellPrice,
-  //   dateUpdate,
-  //   decimalNumber,
-  //   status,
-  //   mode,
-  //   unitPriceRatio,
-  //   maxAutoMin,
-  // } = productData
+function ProductCard({ name, dateUpdate, price, diffBuyPrice, diffSellPrice, status }) {
+  // productData: { id, name, price, diffBuyPrice, diffSellPrice, dateUpdate, decimalNumber, status, mode, unitPriceRatio, maxAutoMin }
   const [selectedMode, setSelectedMode] = useState("")
-  const modeText = selectedMode === "buy" ? "خرید" : selectedMode === "sell" ? "فروش" : "ناشناخته"
 
+  const modeText = selectedMode === "buy" ? "خرید" : selectedMode === "sell" ? "فروش" : "ناشناخته"
   const lastUpdated = new PersianDate(dateUpdate)
   const updateDate = lastUpdated.toLocaleDateString()
   const updateTime = getTimeFa(lastUpdated)
@@ -36,6 +25,10 @@ function ProductCard({ name, dateUpdate, price, diffBuyPrice, diffSellPrice }) {
   const groupDiffSellPrice = Cookies.get("diffSellPrice") ?? 0
   const totalBuyPrice = price + +groupDiffBuyPrice + +diffBuyPrice
   const totalSellPrice = price - groupDiffSellPrice - diffSellPrice
+  const isBuyBtnEnabled =
+    status !== ENUMS.PRODUCT_STATUS.DISABLED && status !== ENUMS.PRODUCT_STATUS.SELL_ONLY
+  const isSellBtnEnabled =
+    status !== ENUMS.PRODUCT_STATUS.DISABLED && status !== ENUMS.PRODUCT_STATUS.BUY_ONLY
 
   return (
     <StyledContainer>
@@ -51,6 +44,7 @@ function ProductCard({ name, dateUpdate, price, diffBuyPrice, diffSellPrice }) {
       <div className="flex gap-4">
         <Pricy
           mode="buy"
+          btnEnabled={isBuyBtnEnabled}
           price={totalBuyPrice}
           isActive={selectedMode === "buy"}
           onBtnClick={() => {
@@ -59,6 +53,7 @@ function ProductCard({ name, dateUpdate, price, diffBuyPrice, diffSellPrice }) {
         />
         <Pricy
           mode="sell"
+          btnEnabled={isSellBtnEnabled}
           price={totalSellPrice}
           isActive={selectedMode === "sell"}
           onBtnClick={() => {

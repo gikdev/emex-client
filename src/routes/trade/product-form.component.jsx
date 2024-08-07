@@ -1,15 +1,21 @@
 import { Btn, LabeledInput, LabeledSwitch, Labeler, PriceInput } from "@/components"
 import { priceToToman } from "@/utils"
-import { useId, useState } from "react"
+import { useEffect, useId, useRef, useState } from "react"
 
 function ProductForm({ onRefusion, modeText }) {
   const [weight, setWeight] = useState("")
   const [tradeValue, setTradeValue] = useState("")
   const [isBuyingInWeightMode, setIsBuyingWeightMode] = useState(true)
+  const targetInputRef = useRef(null)
   const priceInputID = `price-input-${useId()}`
   const buyingModeText = isBuyingInWeightMode ? "وزنی" : "ریالی"
   const tomanTradeValue = `${priceToToman(tradeValue)} تومن`
   const isReady = tradeValue && weight
+
+  // Focus targeted input on mount
+  useEffect(() => {
+    targetInputRef.current?.focus()
+  }, [])
 
   // BUG 🐞👇🏻 fixed... 😁
   const handleSubmit = e => e.preventDefault()
@@ -23,6 +29,7 @@ function ProductForm({ onRefusion, modeText }) {
       />
 
       <LabeledInput
+        ref={targetInputRef}
         value={weight}
         onChange={e => setWeight(e.target.value)}
         labelTextPrimary="وزن (گرم):"
