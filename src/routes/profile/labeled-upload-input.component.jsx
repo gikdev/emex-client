@@ -1,8 +1,8 @@
 import { Btn } from "@/components"
 import { Upload } from "@phosphor-icons/react"
-import { useId } from "react"
+import { forwardRef, useId } from "react"
 
-function LabeledUploadInput({ labelText, secondLabel }) {
+function LabeledUploadInputComponent({ labelText, secondLabel }, ref) {
   const idToUse = useId()
   const id = `labeled-upload-input-${idToUse}`
 
@@ -15,9 +15,11 @@ function LabeledUploadInput({ labelText, secondLabel }) {
       <Btn as="label" htmlFor={id} className="h-12 cursor-pointer" icon={Upload}>
         آپلود فایل
       </Btn>
-      <input type="file" id={id} className="hidden" />
+      <input type="file" id={id} className="hidden" ref={ref} />
     </div>
   )
 }
+
+const LabeledUploadInput = forwardRef(LabeledUploadInputComponent)
 
 export { LabeledUploadInput }
