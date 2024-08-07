@@ -1,11 +1,24 @@
 import { Btn, LabeledInput, LabeledSwitch, Labeler, PriceInput } from "@/components"
+import { useSignalRContext } from "@/contexts"
+import { ENUMS } from "@/enums"
 import { priceToToman } from "@/utils"
 import { useEffect, useId, useRef, useState } from "react"
+import { requestOrder } from "./product.service"
 
 const genReadonlyInputLabel = (text, isReadonly) =>
   isReadonly ? `${text} (غیر قابل ویرایش):` : `${text}:`
 
-function ProductForm({ basePrice, onRefusion, modeText, unitPriceRatio, decimalNumber }) {
+function ProductForm({
+  id,
+  basePrice,
+  onRefusion,
+  modeText,
+  unitPriceRatio,
+  decimalNumber,
+  totalBuyPrice,
+  totalSellPrice,
+}) {
+  const { connectionRef } = useSignalRContext()
   const [weight, setWeight] = useState("")
   const [tradeValue, setTradeValue] = useState("")
   const [isBuyingInWeightMode, setIsBuyingWeightMode] = useState(true)
@@ -14,8 +27,8 @@ function ProductForm({ basePrice, onRefusion, modeText, unitPriceRatio, decimalN
   const buyingModeText = isBuyingInWeightMode ? "وزنی" : "ریالی"
   const tomanTradeValue = `${priceToToman(tradeValue)} تومن`
   const isReady = tradeValue && weight
-  const volumeMode = isBuyingInWeightMode
-  const valueMode = !isBuyingInWeightMode
+  const isVolumeMode = isBuyingInWeightMode
+  const isValueMode = !isBuyingInWeightMode
 
   // Focus targeted input on mount
   useEffect(() => targetInputRef.current?.focus(), [])
@@ -31,9 +44,6 @@ function ProductForm({ basePrice, onRefusion, modeText, unitPriceRatio, decimalN
     setWeight("")
     setTradeValue("")
   }, [isBuyingInWeightMode, modeText])
-
-  // BUG 🐞👇🏻 fixed... 😁
-  const handleSubmit = e => e.preventDefault()
 
   function handleFormReset(e) {
     setWeight("")
@@ -56,6 +66,23 @@ function ProductForm({ basePrice, onRefusion, modeText, unitPriceRatio, decimalN
     setTradeValue("")
   }
 
+  function handleSubmit(e) {
+    e.preventDefault()
+
+    const data = {
+      tyStockID: id,
+      side: modeText === ENUMS.ORDER_SIDE.BUY ? ENUMS.ORDER_SIDE.BUY : ENUMS.ORDER_SIDE.SELL,
+      mode: isValueMode ? ENUMS.PRODUCT_PURCHASE_MODE.VALUE : ENUMS.PRODUCT_PURCHASE_MODE.VOLUME,
+      price: modeText === ENUMS.ORDER_SIDE.BUY ? totalBuyPrice : totalSellPrice,
+      volume: +Number.parseFloat(Number(weight).toFixed(decimalNumber)),
+      value: Number(tradeValue),
+    }
+
+    requestOrder(data, data => {
+      connectionRef.current.invoke("RequestOrder", data.id)
+    })
+  }
+
   return (
     <form className="flex flex-col gap-4" onReset={handleFormReset} onSubmit={handleSubmit}>
       <LabeledSwitch
@@ -65,20 +92,20 @@ function ProductForm({ basePrice, onRefusion, modeText, unitPriceRatio, decimalN
       />
 
       <LabeledInput
-        readOnly={valueMode}
+        readOnly={isValueMode}
         ref={targetInputRef}
         value={weight}
         onChange={handleWeightChange}
-        labelTextPrimary={genReadonlyInputLabel("وزن (گرم)", valueMode)}
+        labelTextPrimary={genReadonlyInputLabel("وزن (گرم)", isValueMode)}
       />
 
       <Labeler
-        label1={genReadonlyInputLabel("ارزش معامله (ریال)", volumeMode)}
+        label1={genReadonlyInputLabel("ارزش معامله (ریال)", isVolumeMode)}
         label2={tomanTradeValue}
         id={priceInputID}
       >
         <PriceInput
-          readOnly={volumeMode}
+          readOnly={isVolumeMode}
           price={tradeValue}
           setPrice={setTradeValue}
           id={priceInputID}

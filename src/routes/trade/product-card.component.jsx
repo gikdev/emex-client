@@ -80,6 +80,8 @@ function ProductCard({
         <>
           <Hr />
           <ProductForm
+            totalBuyPrice={totalBuyPrice}
+            totalSellPrice={totalSellPrice}
             decimalNumber={decimalNumber}
             basePrice={price}
             unitPriceRatio={unitPriceRatio}
