@@ -6,6 +6,7 @@ const SignalRContext = createContext()
 
 const useSignalRContext = () => useContext(SignalRContext)
 
+const isDev = import.meta.env.DEV
 const OK_CONNECTION_STATES = ["connected", "loading"]
 
 function SignalRProvider({ children }) {
@@ -23,6 +24,7 @@ function SignalRProvider({ children }) {
   // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const newConnection = new signalR.HubConnectionBuilder()
+      .configureLogging(isDev ? signalR.LogLevel.Information : signalR.LogLevel.Error)
       .withUrl(`${apiHelper.BASE_URL}/priceHub`)
       .build()
     newConnection.onreconnected(handleReconnected)
