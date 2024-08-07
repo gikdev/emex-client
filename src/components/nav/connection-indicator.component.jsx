@@ -1,4 +1,3 @@
-import { LoadingSpinner } from "@/components"
 import { useSignalRContext } from "@/contexts"
 import { cn } from "@/helpers"
 import { Globe, GlobeX, Question } from "@phosphor-icons/react"
@@ -16,7 +15,6 @@ function ConnectionIndicator() {
 
   return (
     <div className={containerClassName}>
-      {connectionState === "loading" && <LoadingSpinner />}
       <Icon size={24} />
     </div>
   )
