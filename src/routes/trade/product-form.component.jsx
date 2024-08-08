@@ -73,7 +73,7 @@ function ProductForm({
       tyStockID: id,
       side: modeText === ENUMS.ORDER_SIDE.BUY ? ENUMS.ORDER_SIDE.BUY : ENUMS.ORDER_SIDE.SELL,
       mode: isValueMode ? ENUMS.PRODUCT_PURCHASE_MODE.VALUE : ENUMS.PRODUCT_PURCHASE_MODE.VOLUME,
-      price: modeText === ENUMS.ORDER_SIDE.BUY ? totalBuyPrice : totalSellPrice,
+      price: modeText === "خرید" ? totalBuyPrice : totalSellPrice,
       volume: +Number.parseFloat(Number(weight).toFixed(decimalNumber)),
       value: Number(tradeValue),
     }

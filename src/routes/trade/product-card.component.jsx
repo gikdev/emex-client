@@ -14,6 +14,7 @@ const StyledContainer = tw.div`
 `
 
 function ProductCard({
+  id,
   name,
   dateUpdate,
   price,
@@ -80,6 +81,7 @@ function ProductCard({
         <>
           <Hr />
           <ProductForm
+            id={id}
             totalBuyPrice={totalBuyPrice}
             totalSellPrice={totalSellPrice}
             decimalNumber={decimalNumber}
