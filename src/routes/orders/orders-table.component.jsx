@@ -1,16 +1,6 @@
 import { TableFa } from "@/components"
-import { enumToText } from "@/enums"
-import { PersianDate, addCommaToPrice, persianifyNumber, priceToRial, priceToToman } from "@/utils"
-
-const formatters = {
-  date: p => new PersianDate(p.value).toLocaleDateString(),
-  orderSide: p => enumToText("ORDER_SIDE", p.value),
-  orderStatus: p => enumToText("ORDER_STATUS", p.value),
-  persianComma: p => addCommaToPrice(persianifyNumber(p.value)),
-  persianNumber: p => persianifyNumber(p.value),
-  rial: p => priceToRial(p.value),
-  toman: p => priceToToman(p.value),
-}
+import { apiEndpoints, fetcher, formatters } from "@/helpers"
+import { useSWR } from "swr"
 
 const COLUMN_DEFINITIONS = [
   { field: "id", headerName: "آیدی", valueFormatter: formatters.persianNumber },
@@ -24,7 +14,17 @@ const COLUMN_DEFINITIONS = [
   { field: "value", headerName: "ارزش معامله (ریال)", valueFormatter: formatters.persianComma },
 ]
 
+const config = apiEndpoints.customer.orders
+const fetcherConfig = {
+  method: config.method,
+  headers: apiHelper.header.jsonAndBearer,
+  // body: dataToSend,
+  // WHAT TO SEND???
+}
+
 function OrdersTable() {
+  // const response = useSWR(config.url, fetcher(fetcherConfig))
+
   return <TableFa columnDefs={COLUMN_DEFINITIONS} />
 }
 
