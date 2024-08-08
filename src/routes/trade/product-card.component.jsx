@@ -23,6 +23,8 @@ function ProductCard({
   status,
   unitPriceRatio,
   decimalNumber,
+  mode,
+  maxAutoMin,
 }) {
   // productData: { id, name, price, diffBuyPrice, diffSellPrice, dateUpdate, decimalNumber, status, mode, unitPriceRatio, maxAutoMin }
   const [selectedMode, setSelectedMode] = useState("")
@@ -89,6 +91,8 @@ function ProductCard({
             unitPriceRatio={unitPriceRatio}
             modeText={modeText}
             onRefusion={() => setSelectedMode("")}
+            maxAutoMin={maxAutoMin}
+            mode={mode}
           />
         </>
       )}

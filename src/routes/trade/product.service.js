@@ -22,4 +22,19 @@ function requestOrder(data, onSuccessCallback) {
     })
 }
 
-export { requestOrder }
+async function getOrderStatusByID(id, onError = () => {}) {
+  try {
+    const config = apiEndpoints.customer.getOrderByID(id)
+    const res = await fetch(config.url, { headers: apiHelper.header.jsonAndBearer })
+
+    if (!res.ok) throw res
+
+    const data = await res.json()
+
+    return data
+  } catch (err) {
+    onError()
+  }
+}
+
+export { requestOrder, getOrderStatusByID }
