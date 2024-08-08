@@ -24,7 +24,7 @@ function loginUser(data, endLoading, navigate) {
     .then(data => {
       for (const key in data) Cookies.set(key, data[key])
 
-      navigate("/trade")
+      location.href = "/trade"
     })
     .catch(() => {
       toast.error(MESSAGES.ERROR_DEFAULT_DESCRIPTION)
