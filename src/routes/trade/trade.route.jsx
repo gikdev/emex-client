@@ -35,7 +35,7 @@ function Trade() {
   }, [products, productsResponse.data])
 
   function handlePriceChange(stockID, newPrice, priceType, date) {
-    const clonedProducts = JSON.parse(JSON.stringify(products))
+    const clonedProducts = [...products]
     const targetStockIndex = clonedProducts.findIndex(product => product.id === stockID)
     clonedProducts[targetStockIndex][priceType] = Number(newPrice)
     clonedProducts[targetStockIndex].dateUpdate = date
