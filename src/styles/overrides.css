@@ -15,3 +15,9 @@
 .ag-paging-panel * {
   min-width: max-content;
 }
+
+@media screen and (min-width: 55em) {
+  .ag-paging-panel {
+    flex-direction: row;
+  }
+}
