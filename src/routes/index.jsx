@@ -5,6 +5,7 @@ import { Home } from "./home/home.route"
 import { Login } from "./login/login.route"
 import { Orders } from "./orders/orders.route"
 import { Profile } from "./profile/profile.route"
+import { Remainings } from "./remainings/remainings.route"
 import { Rules } from "./rules/rules.route"
 import { Test } from "./test.route"
 import { Trade } from "./trade/trade.route"
@@ -19,6 +20,7 @@ function Routes() {
           <Route path="/trade" component={Trade} />
           <Route path="/profile" component={Profile} />
           <Route path="/orders" component={Orders} />
+          <Route path="/remainings" component={Remainings} />
           <Route path="/about" component={About} />
           <Route path="/rules" component={Rules} />
           <Route path="/test" component={Test} />
