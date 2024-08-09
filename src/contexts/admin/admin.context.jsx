@@ -37,7 +37,7 @@ function AdminProvider({ children }) {
       setAdminStatus(_isOnline ? ENUMS.ADMIN_STATUS.ONLINE : ENUMS.ADMIN_STATUS.OFFLINE)
       setIsOnline(_isOnline)
     })
-  }, [connectionRef])
+  }, [connectionRef.current])
 
   return <AdminContext.Provider value={value}>{children}</AdminContext.Provider>
 }
