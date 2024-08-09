@@ -1,5 +1,5 @@
 import { Heading, Hr } from "@/components"
-import { useAdminContext } from "@/contexts"
+import { useAdminContext, useSignalRContext } from "@/contexts"
 import { ENUMS } from "@/enums"
 import { PersianDate, getTimeFa } from "@/utils"
 import Cookies from "js-cookie"
@@ -30,6 +30,7 @@ function ProductCard({
   // productData: { id, name, price, diffBuyPrice, diffSellPrice, dateUpdate, decimalNumber, status, mode, unitPriceRatio, maxAutoMin }
   const [selectedMode, setSelectedMode] = useState("")
   const { isOnline } = useAdminContext()
+  const { connectionState } = useSignalRContext()
 
   const modeText = selectedMode === "buy" ? "خرید" : selectedMode === "sell" ? "فروش" : "ناشناخته"
   const lastUpdated = new PersianDate(dateUpdate)
@@ -42,16 +43,21 @@ function ProductCard({
   const isBuyBtnEnabled =
     status !== ENUMS.PRODUCT_STATUS.DISABLED &&
     status !== ENUMS.PRODUCT_STATUS.SELL_ONLY &&
-    isOnline
+    isOnline &&
+    connectionState === "connected"
   const isSellBtnEnabled =
-    status !== ENUMS.PRODUCT_STATUS.DISABLED && status !== ENUMS.PRODUCT_STATUS.BUY_ONLY && isOnline
+    status !== ENUMS.PRODUCT_STATUS.DISABLED &&
+    status !== ENUMS.PRODUCT_STATUS.BUY_ONLY &&
+    isOnline &&
+    connectionState === "connected"
 
   // If the admin went offline, close forms...
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
-    if (!selectedMode.length) return
-    if (isOnline) return
+    if (isOnline && connectionState === "connected") return
+
     setSelectedMode("")
-  }, [isOnline, selectedMode])
+  }, [isOnline, selectedMode, connectionState])
 
   function handleBuyBtnClick() {
     const nextMode = selectedMode === "buy" ? "" : "buy"
