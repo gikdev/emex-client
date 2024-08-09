@@ -1,4 +1,7 @@
+import logoFull from "@/assets/logo-full.png"
 import { Btn } from "@/components"
+import { useUIContext } from "@/contexts"
+import { cn } from "@/helpers"
 import {
   Code,
   Coins,
@@ -30,22 +33,32 @@ const items = [
 
 if (isDev) items.push({ id: 9, text: "تست", icon: Code, url: "/test" })
 
-const StyledAside = tw.aside`
-  border-l border-slatedark-6 
-  flex flex-col p-4 gap-2 max-w-max
-`
-
 function Sidebar() {
+  const { sidebar } = useUIContext()
+
+  const asideClasses = cn(
+    "border-l border-slatedark-6 bg-slatedark-1 z-10",
+    "flex flex-col p-4 gap-2",
+    "inset-0 w-full max-w-full",
+    "md:relative md:max-w-max md:flex",
+    {
+      hidden: !sidebar.isOpen,
+      fixed: sidebar.isOpen,
+    },
+  )
+
   return (
-    <StyledAside>
+    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+    <aside className={asideClasses} onClick={sidebar.close}>
+      <img className="inline-block md:hidden max-w-max mxauto" src={logoFull} alt="" />
       {items.map(item => (
         <SidebarItem key={item.id} {...item} />
       ))}
-      <Btn className="mt-auto md:hidden" icon={XCircle}>
+      <Btn onClick={sidebar.close} className="mt-auto md:hidden" icon={XCircle}>
         {" "}
         بستن{" "}
       </Btn>
-    </StyledAside>
+    </aside>
   )
 }
 

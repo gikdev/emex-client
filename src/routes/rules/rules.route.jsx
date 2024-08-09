@@ -10,7 +10,7 @@ function Rules() {
         شرایط و قوانین
       </Heading>
       <Hr />
-      <section className="p-8 text-center">
+      <section className="p-4 md:p-8 text-center">
         <p>{rules}</p>
       </section>
     </>

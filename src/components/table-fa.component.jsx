@@ -2,7 +2,7 @@ import { AG_GRID_LOCALE_IR } from "@/constants"
 import { AgGridReact } from "ag-grid-react"
 
 const DEFAULT_COLUMN_DEFENITION = {
-  minWidth: 200,
+  minWidth: 100,
   filter: true,
   floatingFilter: true,
   lockPosition: true,

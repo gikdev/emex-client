@@ -3,8 +3,8 @@ import { apiEndpoints, apiHelper, fetcher, formatters } from "@/helpers"
 import useSWR from "swr"
 
 const COLUMN_DEFINITIONS = [
-  { field: "stockName", headerName: "نام محصول", flex: 1 },
-  { field: "volume", headerName: "مقدار محصول", flex: 1, valueFormatter: formatters.debt },
+  { field: "stockName", headerName: "نام محصول" },
+  { field: "volume", headerName: "مقدار محصول", valueFormatter: formatters.debt },
 ]
 const config = apiEndpoints.customer.portfolio
 const fetcherConfig = {

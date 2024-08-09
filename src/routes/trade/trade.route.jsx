@@ -8,7 +8,7 @@ import useSWR from "swr"
 import tw from "tailwind-styled-components"
 import { ProductCard } from "./product-card.component"
 
-const GridContainer = tw.div`flex flex-wrap gap-4 p-8 justify-center items-start`
+const GridContainer = tw.div`flex flex-wrap gap-4 p-4 md:p-8 justify-center items-start`
 const config = apiEndpoints.customer.stocks
 
 function Trade() {

@@ -2,3 +2,16 @@
 [class*="ag-theme"] {
   --ag-font-family: "Vazirmatn", sans-serif;
 }
+
+.ag-paging-panel {
+  overflow-x: auto;
+  max-width: 100%;
+  height: max-content;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 0;
+}
+
+.ag-paging-panel * {
+  min-width: max-content;
+}

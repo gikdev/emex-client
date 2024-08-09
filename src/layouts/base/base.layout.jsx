@@ -1,24 +1,24 @@
 import { ErrorCard, Nav } from "@/components"
-import { AdminProvider } from "@/contexts"
 import { useSmartLoginManager } from "@/hooks"
 import { ErrorBoundary } from "react-error-boundary"
+import { Providers } from "./providers"
 import { Sidebar } from "./sidebar.component"
 
 function Base({ children }) {
   useSmartLoginManager()
 
   return (
-    <AdminProvider>
+    <Providers>
       <header>
         <Nav />
       </header>
-      <main className="flex grow">
+      <main className="flex grow shrink">
         <Sidebar />
-        <section className="grow">
+        <section className="grow shrink">
           <ErrorBoundary FallbackComponent={ErrorCard}>{children}</ErrorBoundary>
         </section>
       </main>
-    </AdminProvider>
+    </Providers>
   )
 }
 

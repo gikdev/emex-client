@@ -8,7 +8,7 @@ function Orders() {
         سفارشات
       </Heading>
       <Hr />
-      <section className="p-8 h-full">
+      <section className="p-4 md:p-8 h-full">
         <OrdersTable />
       </section>
     </>

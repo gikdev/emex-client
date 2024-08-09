@@ -10,8 +10,9 @@ import { ProductForm } from "./product-form.component"
 
 const StyledContainer = tw.div`
   bg-slatedark-2 border-2 border-slatedark-6 
-  p-4 flex flex-col gap-4 min-w-full
+  p-2 flex flex-col gap-2 min-w-full
   rounded-lg max-w-max sm:min-w-96
+  md:gap-4 md:p-4
 `
 
 function ProductCard({
@@ -80,7 +81,7 @@ function ProductCard({
         </p>
       </div>
       <Hr />
-      <div className="flex gap-4">
+      <div className="flex flex-wrap gap-4">
         <Pricy
           mode="buy"
           btnEnabled={isBuyBtnEnabled}

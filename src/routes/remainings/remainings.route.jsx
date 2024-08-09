@@ -8,7 +8,7 @@ function Remainings() {
         مانده حساب
       </Heading>
       <Hr />
-      <section className="h-full p-8">
+      <section className="h-full p-4 md:p-8">
         <RemainingsTable />
       </section>
     </>
