@@ -1,6 +1,6 @@
-import avatarPlaceholder from "@/assets/avatar-placeholder.png"
 import logoFull from "@/assets/logo-full.png"
 import { Badge } from "@/components"
+import { useAdminContext } from "@/contexts"
 import tw from "tailwind-styled-components"
 import { Link } from "wouter"
 import { ConnectionIndicator } from "./connection-indicator.component"
@@ -9,16 +9,18 @@ const StyledNav = tw.nav`flex items-center justify-between border-b border-slate
 const StyledAdminChip = tw(Link)`flex gap-2 items-center justify-center`
 
 function Nav() {
+  const adminStatus = useAdminContext()
+
   return (
     <StyledNav>
       <Link href="/">
         <img src={logoFull} alt="" />
       </Link>
-      <StyledAdminChip href="/profile">
+      <StyledAdminChip href="/">
         <ConnectionIndicator />
-        <Badge theme="success">آنلاین</Badge>
-        <p>فروشگاه علی بقال</p>
-        <img src={avatarPlaceholder} alt="" />
+        {adminStatus.isOnline ? <Badge theme="success">آنلاین</Badge> : <Badge>آفلاین</Badge>}
+        <p>{adminStatus.shopName}</p>
+        <img src={adminStatus.logoUrl} alt="" />
       </StyledAdminChip>
     </StyledNav>
   )
