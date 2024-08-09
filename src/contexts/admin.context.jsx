@@ -1,9 +1,9 @@
 import avatarPlaceholder from "@/assets/avatar-placeholder.png"
 import { useSignalRContext } from "@/contexts"
 import { ENUMS } from "@/enums"
+import { useGetMasterInfo } from "@/services"
 import Cookies from "js-cookie"
 import { createContext, useContext, useEffect, useState } from "react"
-import { useGetMasterInfo } from "./use-get-master-info.hook"
 
 const AdminContext = createContext({
   logoUrl: avatarPlaceholder,
