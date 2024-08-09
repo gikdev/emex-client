@@ -29,7 +29,8 @@
     "swr": "^2.2.5",
     "tailwind-merge": "^2.4.0",
     "tailwind-styled-components": "^2.2.0",
-    "wouter": "^3.3.1"
+    "wouter": "^3.3.1",
+    "zaman": "^2.1.1"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.8.3",

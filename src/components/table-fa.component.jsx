@@ -10,14 +10,16 @@ const DEFAULT_COLUMN_DEFENITION = {
 
 function TableFa(props) {
   return (
-    <AgGridReact
-      localeText={AG_GRID_LOCALE_IR}
-      pagination
-      paginationPageSize={20}
-      enableRtl
-      defaultColDef={DEFAULT_COLUMN_DEFENITION}
-      {...props}
-    />
+    <div className="h-full ag-theme-quartz-dark">
+      <AgGridReact
+        localeText={AG_GRID_LOCALE_IR}
+        pagination
+        paginationPageSize={20}
+        enableRtl
+        defaultColDef={DEFAULT_COLUMN_DEFENITION}
+        {...props}
+      />
+    </div>
   )
 }
 
