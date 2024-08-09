@@ -1,8 +1,9 @@
 import { Heading, Hr } from "@/components"
+import { useAdminContext } from "@/contexts"
 import { ENUMS } from "@/enums"
 import { PersianDate, getTimeFa } from "@/utils"
 import Cookies from "js-cookie"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import tw from "tailwind-styled-components"
 import { Pricy } from "./pricy.component"
 import { ProductForm } from "./product-form.component"
@@ -28,6 +29,7 @@ function ProductCard({
 }) {
   // productData: { id, name, price, diffBuyPrice, diffSellPrice, dateUpdate, decimalNumber, status, mode, unitPriceRatio, maxAutoMin }
   const [selectedMode, setSelectedMode] = useState("")
+  const { isOnline } = useAdminContext()
 
   const modeText = selectedMode === "buy" ? "خرید" : selectedMode === "sell" ? "فروش" : "ناشناخته"
   const lastUpdated = new PersianDate(dateUpdate)
@@ -38,9 +40,18 @@ function ProductCard({
   const totalBuyPrice = price + +groupDiffBuyPrice + +diffBuyPrice
   const totalSellPrice = price - groupDiffSellPrice - diffSellPrice
   const isBuyBtnEnabled =
-    status !== ENUMS.PRODUCT_STATUS.DISABLED && status !== ENUMS.PRODUCT_STATUS.SELL_ONLY
+    status !== ENUMS.PRODUCT_STATUS.DISABLED &&
+    status !== ENUMS.PRODUCT_STATUS.SELL_ONLY &&
+    isOnline
   const isSellBtnEnabled =
-    status !== ENUMS.PRODUCT_STATUS.DISABLED && status !== ENUMS.PRODUCT_STATUS.BUY_ONLY
+    status !== ENUMS.PRODUCT_STATUS.DISABLED && status !== ENUMS.PRODUCT_STATUS.BUY_ONLY && isOnline
+
+  // If the admin went offline, close forms...
+  useEffect(() => {
+    if (!selectedMode.length) return
+    if (isOnline) return
+    setSelectedMode("")
+  }, [isOnline, selectedMode])
 
   function handleBuyBtnClick() {
     const nextMode = selectedMode === "buy" ? "" : "buy"
